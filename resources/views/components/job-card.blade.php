@@ -16,9 +16,7 @@
         <x-tag>{{$job->experience}}</x-tag>
     </div>
 </div>
-    <p class="mt-5 text-sm mb-5">
-        {!! nl2br(e($job->description)) !!}
-    </p>
+   
 
   {{$slot}}
 </x-card>

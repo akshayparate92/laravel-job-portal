@@ -12,9 +12,23 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = JobVacancy::all();
+        $jobs = JobVacancy::query();
 
-        return view('job.index' , compact('jobs'));
+        $jobs->when(request('search'),function($query){
+            $query->where(function($query){
+                $query->where('title','like','%'. request('search') . '%')
+                ->orWhere('description','like','%'. request('search'). '%');
+            });
+        })->when(request('from'), function($query){
+            $query->where('salary','>=',  request('from') );
+        })->when(request('to'), function($query){
+            $query->where('salary','<=',  request('to') );
+        })->when(request('experience'),function($query){
+            $query->where('experience',request('experience'));
+        });
+    
+
+        return view('job.index' , ['jobs' => $jobs->get()]);
     }
 
     /**
