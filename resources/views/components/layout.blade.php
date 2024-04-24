@@ -7,6 +7,25 @@
         <title>Laravel Job Portal</title>
     </head>
     <body class="mx-auto mt-10 max-w-2xl bg-slate-100 text-slate-700">
+        <nav class="flex justify-between mb-4 bg-indigo-500 px-3 py-5 ">
+            <ul class="flex space-x-1">
+                <li><a href="{{route('jobs.index')}}">Home</a></li>
+            </ul>
+            <ul class="flex space-x-1">
+                @auth
+                   <li class=" font-medium text-lg"> {{auth()->user()->name ?? 'Anonymous'}} </li>
+                   <li>
+                    <form action="{{route('auth.destroy')}} "  method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <button>Logout</button>
+                    </form>
+                   </li>
+                   @else
+                   <li><a class="hover:underline" href="{{route('auth.create')}}">Sign In</a></li>
+                @endauth
+            </ul>
+        </nav>
             {{$slot}}
     </body>
 </html>

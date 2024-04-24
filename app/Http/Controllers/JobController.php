@@ -17,7 +17,10 @@ class JobController extends Controller
         $jobs->when(request('search'),function($query){
             $query->where(function($query){
                 $query->where('title','like','%'. request('search') . '%')
-                ->orWhere('description','like','%'. request('search'). '%');
+                ->orWhere('description','like','%'. request('search'). '%')
+                ->orWhereHas('employer', function($query){
+                    $query->where('company_name', 'like', '%' .request('search'). '%');
+                });
             });
         })->when(request('from'), function($query){
             $query->where('salary','>=',  request('from') );
