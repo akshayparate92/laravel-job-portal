@@ -13,7 +13,7 @@
             </ul>
             <ul class="flex space-x-1">
                 @auth
-                   <li class=" font-medium text-lg"> {{auth()->user()->name ?? 'Anonymous'}} </li>
+                   <li class=" font-medium text-lg"><a href="{{route('my-job-applications.index')}}"> {{auth()->user()->name ?? 'Anonymous'}}:Application </a></li>
                    <li>
                     <form action="{{route('auth.destroy')}} "  method="POST">
                         @csrf
