@@ -10,6 +10,9 @@
         <div class="flex space-x-2 text-sm">
         <div class="text-slate-600 ">{{$job->employer->company_name}}</div>
         <div class="border rounded-md px-1 bg-slate-200">{{ $job->location }}</div>
+        @if ($job->deleted_at)
+            <span class="text-red-700 ">Deleted Job</span>
+        @endif
         </div>   
     <div class="flex space-x-2 ">
         <x-tag>

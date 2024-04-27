@@ -7,14 +7,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 class JobVacancy extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
     public static array $experience = ['Fresher', 'Intermidiate', 'Senior'];
     public static array $category = ['IT', 'Finance', 'Sales', 'Marketing'];
-
+    protected $fillable = [
+        'title',
+        'location',
+        'salary',
+        'description',
+        'experience',
+        'category'
+    ];
     public function employer():BelongsTo{
 
         return $this->belongsTo(Employer::class);

@@ -15,7 +15,10 @@ class JobVacancyPolicy
     {
         return true;
     }
-
+    public function viewAnyEmployer(User $user): bool
+    {
+        return true;
+    }
     /**
      * Determine whether the user can view the model.
      */
@@ -29,15 +32,22 @@ class JobVacancyPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+       return $user->employer !== null;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, JobVacancy $jobVacancy): bool
+    public function update(User $user, JobVacancy $jobVacancy): bool | Response
     {
-        return false;
+        if($jobVacancy->employer->user_id !== $user->id){
+            return false;
+        }
+
+        if($jobVacancy->jobApplications()->count() >0){
+            return Response::deny("You cannot delete job vacancy with applications.");
+        }
+        return true;
     }
 
     /**
@@ -45,7 +55,7 @@ class JobVacancyPolicy
      */
     public function delete(User $user, JobVacancy $jobVacancy): bool
     {
-        return false;
+        return $jobVacancy->employer->user_id === $user->id;
     }
 
     /**
@@ -53,7 +63,7 @@ class JobVacancyPolicy
      */
     public function restore(User $user, JobVacancy $jobVacancy): bool
     {
-        return false;
+        return $jobVacancy->employer->user_id === $user->id;
     }
 
     /**
@@ -61,7 +71,7 @@ class JobVacancyPolicy
      */
     public function forceDelete(User $user, JobVacancy $jobVacancy): bool
     {
-        return false;
+        return $jobVacancy->employer->user_id === $user->id;
     }
 
     public function apply ( User $user , JobVacancy $jobVacancy):bool{

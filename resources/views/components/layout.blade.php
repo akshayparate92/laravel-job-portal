@@ -14,6 +14,7 @@
             <ul class="flex space-x-1">
                 @auth
                    <li class=" font-medium text-lg"><a href="{{route('my-job-applications.index')}}"> {{auth()->user()->name ?? 'Anonymous'}}:Application </a></li>
+                    <li><a class="font-medium text-lg" href="{{route('my-jobs.index')}}">My jobs</a> </li>
                    <li>
                     <form action="{{route('auth.destroy')}} "  method="POST">
                         @csrf
@@ -30,6 +31,13 @@
             <div role="alert" class="my-8 border rounded-md border-green-300 border-l-4 bg-green-100 p-4 text-green-700 opacity-75 ">
                 <p class="font-bold">Success!</p>
                <p> {{ session('success')}} </p>
+
+            </div>
+        @endif
+        @if (session('error'))
+            <div role="alert" class="my-8 border rounded-md border-red-300 border-l-4 bg-red-100 p-4 text-red-700 opacity-75 ">
+                <p class="font-bold">Error!</p>
+               <p> {{ session('error')}} </p>
 
             </div>
         @endif

@@ -5,15 +5,23 @@
 <x-card>
     <x-job-card :$job   />
     <hr>    
-    <form class="my-2" action="{{route('job.application.store', $job)}}" method="POST">
+    <form class="my-2" action="{{route('job.application.store', $job)}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-1">
         <label for="expected_salary" class="font-medium block text-sm m-4 text-slate-600"> Expected Salary</label>     
         <input type="number" class="mb-4 px-2.5 py-1.5 ring-1 focus:ring-2 ring-slate-300 border-0 rounded-md w-full
             placeholder:text-slate-300 text-sm " name="expected_salary" placeholder="Enter Your Expected Salary">
             @error('expected_salary')
-               <div class="text-sm text-red-400 "> {{$message}}</div>
+               <div class="text-xs text-red-400 "> {{$message}}</div>
             @enderror
+        </div>
+        <div class="mb-1">
+            <label for="cv_file" class="font-medium block text-sm m-4 text-slate-600"> Upload Your CV</label>
+            <input type="file" name="cv_file" class="mb-4 px-2.5 py-1.5 ring-1 focus:ring-2 ring-slate-300 border-0 rounded-md w-full
+            placeholder:text-slate-300 text-sm " placeholder="Upload CV File" >
+            @error('cv_file')
+            <div class="text-xs text-red-400 "> {{$message}}</div>
+         @enderror
         </div>
             <x-button class="my-4 w-full px-3 py-2 hover:text-slate-800 hover:bg-slate-500 ">Apply</x-button>
     </form>
